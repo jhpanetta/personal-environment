@@ -1,0 +1,2 @@
+MAKEFLAGS="-DCMAKE_BUILD_TYPE=RelWithDebInfo"; export MAKEFLAGS
+source ~/zoox_ros_ws/devel/setup.bash

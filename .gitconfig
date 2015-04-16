@@ -1,0 +1,5 @@
+[user]
+	email = jim@zoox.com
+	name = Jim Panetta
+[push]
+	default = current

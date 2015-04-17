@@ -1,1 +1,3 @@
-source ~/zoox_clams_ws/devel/setup.bash
+#!/bin/bash
+export WORKSPACE=~/workspaces/clams-dev
+source $WORKSPACE/devel/setup.bash

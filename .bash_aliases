@@ -48,8 +48,8 @@ delpath()
 
 ####################### DEV environments ###################
 
-alias goDevel="source ~/.environment/zoox_devel;cd ~/zoox_ros_ws/"
-alias goClams="source ~/.environment/zoox_clams;cd ~/zoox_clams_ws/"
+alias goDevel="source ~/.environment/zoox_devel;cd $WORKSPACE"
+alias goClams="source ~/.environment/zoox_clams;cd $WORKSPACE"
 
-alias goTest="source ~/.environment/zoox_test;cd ~/test_catkin_ws/"
+#alias goTest="source ~/.environment/zoox_test;cd ~/test_catkin_ws/"
 

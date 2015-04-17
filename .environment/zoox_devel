@@ -1,2 +1,4 @@
+#!/bin/bash
+export WORKSPACE=~/workspaces/driving-dev
 MAKEFLAGS="-DCMAKE_BUILD_TYPE=RelWithDebInfo"; export MAKEFLAGS
-source ~/zoox_ros_ws/devel/setup.bash
+source $WORKSPACE/devel/setup.bash

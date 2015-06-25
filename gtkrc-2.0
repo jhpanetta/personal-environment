@@ -1,0 +1,6 @@
+style "default-style"
+{
+        GtkWindow::resize-grip-height = 4
+        GtkWindow::resize-grip-width  = 4
+}
+class "GtkWidget" style "default-style"

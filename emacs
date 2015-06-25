@@ -4,6 +4,7 @@
 (setq default-buffer-file-coding-system 'iso-latin-1-unix)
 (prefer-coding-system 'iso-latin-1-unix)
 (normal-erase-is-backspace-mode)
+(set-default 'truncate-lines t)
 
 ;; make passwords invisible?
 (add-hook 'comint-output-filter-functions
@@ -33,12 +34,12 @@
 (setq c-default-style "linux" c-basic-offset 2)
 
 ;; Load ROS emacs extenstions
-(add-to-list 'load-path "/opt/ros/indigo/share/emacs/site-lisp")
-(require 'rosemacs-config)
+;(add-to-list 'load-path "/opt/ros/indigo/share/emacs/site-lisp")
+;(require 'rosemacs-config)
 (require 'yaml-mode)
 
 ;; Python Preferences
-(setq py-indent-offset 4)
+(setq python-indent-offset 2)
 (setq-default indent-tabs-mode nil)
 (defun py-indent (arg)
   "change python indent on the fly"
@@ -90,11 +91,11 @@
 ;;(setq mouse-yank-at-point t)
 
 ;;;; in emacs-nw in a term, there's weirdness with keys
-;;(defvar termtype nil "terminal type being used")
-;;(set-variable 'termtype (getenv "TERM"))
-;;(if (string= termtype "xterm" )
-;;    (progn
-;;      (global-set-key [backspace] 'delete-backward-char)))
+(defvar termtype nil "terminal type being used")
+(set-variable 'termtype (getenv "TERM"))
+(if (string= termtype "xterm" )
+    (progn
+      (global-set-key [backspace] 'backward-delete-char)))
 
 ;; Add filename mode hook bindings
 (setq auto-mode-alist
@@ -117,6 +118,7 @@
                  ("\\.txt\\'"            . text-mode)
                  ("\\.xml\\'"            . nxml-mode)
                  ("\\.yml\\'"            . yaml-mode)
+                 ("\\.yaml\\'"           . yaml-mode)
                )))
 
 (custom-set-variables
@@ -124,12 +126,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cua-mode t nil (cua-base))
  '(inhibit-startup-screen t)
+ '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 158 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
 (put 'downcase-region 'disabled nil)

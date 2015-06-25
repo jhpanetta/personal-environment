@@ -6,9 +6,9 @@
 #
 
 alias purge="rm -f *~"
+alias ls='ls -F'
 
-
-
+alias wopr='ssh -YA wopr'
 
 
 ################ PATH Manipulation ###################################
@@ -48,8 +48,8 @@ delpath()
 
 ####################### DEV environments ###################
 
-alias goDevel="source ~/.environment/zoox_devel;cd $WORKSPACE"
-alias goClams="source ~/.environment/zoox_clams;cd $WORKSPACE"
+alias goDevel='source ~/.environment/zoox_devel;cd $WORKSPACE'
+alias goClams='source ~/.environment/zoox_clams;cd $WORKSPACE'
 
-#alias goTest="source ~/.environment/zoox_test;cd ~/test_catkin_ws/"
+#alias goTest='source ~/.environment/zoox_test;cd ~/test_catkin_ws/'
 

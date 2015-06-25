@@ -1,35 +1,41 @@
 set history save on
-set logging on
-set logging on
+#set logging on
 set width unlimited
 set height unlimited
 
+#python
+#import sys
+#sys.path.insert(0, '/home/panetta/software/gdb/stl_python')
+#from libstdcxx.v6.printers import register_libstdcxx_printers
+#register_libstdcxx_printers (None)
+#end
 
-#   STL GDB evaluators/views/utilities - 1.03
-#
-#   The new GDB commands:                                                         
-# 	    are entirely non instrumental                                             
-# 	    do not depend on any "inline"(s) - e.g. size(), [], etc
-#       are extremely tolerant to debugger settings
-#                                                                                 
+
+##   STL GDB evaluators/views/utilities - 1.03
+##
+##   The new GDB commands:                                                         
+## 	    are entirely non instrumental                                             
+## 	    do not depend on any "inline"(s) - e.g. size(), [], etc
+##       are extremely tolerant to debugger settings
+##                                                                                 
 #   This file should be "included" in .gdbinit as following:
 #   source stl-views.gdb or just paste it into your .gdbinit file
 #
 #   The following STL containers are currently supported:
 #
-#       std::vector<T> -- via pvector command
-#       std::list<T> -- via plist or plist_member command
-#       std::map<T,T> -- via pmap or pmap_member command
-#       std::multimap<T,T> -- via pmap or pmap_member command
-#       std::set<T> -- via pset command
-#       std::multiset<T> -- via pset command
-#       std::deque<T> -- via pdequeue command
-#       std::stack<T> -- via pstack command
-#       std::queue<T> -- via pqueue command
-#       std::priority_queue<T> -- via ppqueue command
-#       std::bitset<n> -- via pbitset command
-#       std::string -- via pstring command
-#       std::widestring -- via pwstring command
+#	std::vector<T> -- via pvector command
+#	std::list<T> -- via plist or plist_member command
+#	std::map<T,T> -- via pmap or pmap_member command
+#	std::multimap<T,T> -- via pmap or pmap_member command
+#	std::set<T> -- via pset command
+#	std::multiset<T> -- via pset command
+#	std::deque<T> -- via pdequeue command
+#	std::stack<T> -- via pstack command
+#	std::queue<T> -- via pqueue command
+#	std::priority_queue<T> -- via ppqueue command
+#	std::bitset<n> -- via pbitset command
+#	std::string -- via pstring command
+#	std::widestring -- via pwstring command
 #
 #   The end of this file contains (optional) C++ beautifiers
 #   Make sure your debugger supports $argc
@@ -42,13 +48,13 @@ set height unlimited
 #
 #   Modified to work with g++ 4.3 by Anders Elton
 #   Also added _member functions, that instead of printing the entire class in map, prints a member.
-
-
-
+ 
+ 
+ 
 #
 # std::vector<>
 #
-
+ 
 define pvector
 	if $argc == 0
 		help pvector
@@ -100,7 +106,7 @@ define pvector
 		whatis $arg0._M_impl._M_start
 	end
 end
-
+ 
 document pvector
 	Prints std::vector<T> information.
 	Syntax: pvector <vector> <idx1> <idx2>
@@ -110,11 +116,11 @@ document pvector
 	pvector v 0 - Prints element[idx] from vector
 	pvector v 1 2 - Prints elements in range [idx1..idx2] from vector
 end 
-
+ 
 #
 # std::list<>
 #
-
+ 
 define plist
 	if $argc == 0
 		help plist
@@ -144,7 +150,7 @@ define plist
 		end
 	end
 end
-
+ 
 document plist
 	Prints std::list<T> information.
 	Syntax: plist <list> <T> <idx>: Prints list size, if T defined all elements or just element at idx
@@ -153,7 +159,7 @@ document plist
 	plist l int - prints all elements and list size
 	plist l int 2 - prints the third element in the list (if exists) and list size
 end
-
+ 
 define plist_member
 	if $argc == 0
 		help plist_member
@@ -183,7 +189,7 @@ define plist_member
 		end
 	end
 end
-
+ 
 document plist_member
 	Prints std::list<T> information.
 	Syntax: plist <list> <T> <idx>: Prints list size, if T defined all elements or just element at idx
@@ -191,12 +197,12 @@ document plist_member
 	plist_member l int member - prints all elements and list size
 	plist_member l int member 2 - prints the third element in the list (if exists) and list size
 end
-
-
+ 
+ 
 #
 # std::map and std::multimap
 #
-
+ 
 define pmap
 	if $argc == 0
 		help pmap
@@ -306,7 +312,7 @@ define pmap
 		printf "Map size = %u\n", $tree_size
 	end
 end
-
+ 
 document pmap
 	Prints std::map<TLeft and TRight> or std::multimap<TLeft and TRight> information. Works for std::multimap as well.
 	Syntax: pmap <map> <TtypeLeft> <TypeRight> <valLeft> <valRight>: Prints map size, if T defined all elements or just element(s) with val(s)
@@ -316,8 +322,8 @@ document pmap
 	pmap m int int 20 - prints the element(s) with left-value = 20 (if any) and map size
 	pmap m int int 20 200 - prints the element(s) with left-value = 20 and right-value = 200 (if any) and map size
 end
-
-
+ 
+ 
 define pmap_member
 	if $argc == 0
 		help pmap_member
@@ -393,7 +399,7 @@ define pmap_member
 		printf "Map size = %u\n", $tree_size
 	end
 end
-
+ 
 document pmap_member
 	Prints std::map<TLeft and TRight> or std::multimap<TLeft and TRight> information. Works for std::multimap as well.
 	Syntax: pmap <map> <TtypeLeft> <TypeRight> <valLeft> <valRight>: Prints map size, if T defined all elements or just element(s) with val(s)
@@ -401,12 +407,12 @@ document pmap_member
 	pmap_member m class1 member1 class2 member2 - prints class1.member1 : class2.member2
 	pmap_member m class1 member1 class2 member2 lvalue - prints class1.member1 : class2.member2 where class1 == lvalue
 end
-
-
+ 
+ 
 #
 # std::set and std::multiset
 #
-
+ 
 define pset
 	if $argc == 0
 		help pset
@@ -476,7 +482,7 @@ define pset
 		printf "Set size = %u\n", $tree_size
 	end
 end
-
+ 
 document pset
 	Prints std::set<T> or std::multiset<T> information. Works for std::multiset as well.
 	Syntax: pset <set> <T> <val>: Prints set size, if T defined all elements or just element(s) having val
@@ -485,13 +491,13 @@ document pset
 	pset s int - prints all elements and the size of s
 	pset s int 20 - prints the element(s) with value = 20 (if any) and the size of s
 end
-
-
-
+ 
+ 
+ 
 #
 # std::dequeue
 #
-
+ 
 define pdequeue
 	if $argc == 0
 		help pdequeue
@@ -521,7 +527,7 @@ define pdequeue
 		printf "Dequeue size = %u\n", $size
 	end
 end
-
+ 
 document pdequeue
 	Prints std::dequeue<T> information.
 	Syntax: pdequeue <dequeue>: Prints dequeue size, if T defined all elements
@@ -529,13 +535,13 @@ document pdequeue
 	Example:
 	pdequeue d - prints all elements and size of d
 end
-
-
-
+ 
+ 
+ 
 #
 # std::stack
 #
-
+ 
 define pstack
 	if $argc == 0
 		help pstack
@@ -543,15 +549,15 @@ define pstack
 		set $start_cur = $arg0.c._M_impl._M_start._M_cur
 		set $finish_cur = $arg0.c._M_impl._M_finish._M_cur
 		set $size = $finish_cur - $start_cur
-        set $i = $size - 1
-        while $i >= 0
-            p *($start_cur + $i)
-            set $i--
-        end
+	set $i = $size - 1
+	while $i >= 0
+	    p *($start_cur + $i)
+	    set $i--
+	end
 		printf "Stack size = %u\n", $size
 	end
 end
-
+ 
 document pstack
 	Prints std::stack<T> information.
 	Syntax: pstack <stack>: Prints all elements and size of the stack
@@ -559,13 +565,13 @@ document pstack
 	Example:
 	pstack s - prints all elements and the size of s
 end
-
-
-
+ 
+ 
+ 
 #
 # std::queue
 #
-
+ 
 define pqueue
 	if $argc == 0
 		help pqueue
@@ -573,15 +579,15 @@ define pqueue
 		set $start_cur = $arg0.c._M_impl._M_start._M_cur
 		set $finish_cur = $arg0.c._M_impl._M_finish._M_cur
 		set $size = $finish_cur - $start_cur
-        set $i = 0
-        while $i < $size
-            p *($start_cur + $i)
-            set $i++
-        end
+	set $i = 0
+	while $i < $size
+	    p *($start_cur + $i)
+	    set $i++
+	end
 		printf "Queue size = %u\n", $size
 	end
 end
-
+ 
 document pqueue
 	Prints std::queue<T> information.
 	Syntax: pqueue <queue>: Prints all elements and the size of the queue
@@ -589,13 +595,13 @@ document pqueue
 	Example:
 	pqueue q - prints all elements and the size of q
 end
-
-
-
+ 
+ 
+ 
 #
 # std::priority_queue
 #
-
+ 
 define ppqueue
 	if $argc == 0
 		help ppqueue
@@ -611,7 +617,7 @@ define ppqueue
 		printf "Priority queue capacity = %u\n", $capacity
 	end
 end
-
+ 
 document ppqueue
 	Prints std::priority_queue<T> information.
 	Syntax: ppqueue <priority_queue>: Prints all elements, size and capacity of the priority_queue
@@ -619,34 +625,34 @@ document ppqueue
 	Example:
 	ppqueue pq - prints all elements, size and capacity of pq
 end
-
-
-
+ 
+ 
+ 
 #
 # std::bitset
 #
-
+ 
 define pbitset
 	if $argc == 0
 		help pbitset
 	else
-        p /t $arg0._M_w
+	p /t $arg0._M_w
 	end
 end
-
+ 
 document pbitset
 	Prints std::bitset<n> information.
 	Syntax: pbitset <bitset>: Prints all bits in bitset
 	Example:
 	pbitset b - prints all bits in b
 end
-
-
-
+ 
+ 
+ 
 #
 # std::string
 #
-
+ 
 define pstring
 	if $argc == 0
 		help pstring
@@ -657,18 +663,18 @@ define pstring
 		printf "String ref-count \t= %d\n", $arg0._M_rep()._M_refcount
 	end
 end
-
+ 
 document pstring
 	Prints std::string information.
 	Syntax: pstring <string>
 	Example:
 	pstring s - Prints content, size/length, capacity and ref-count of string s
 end 
-
+ 
 #
 # std::wstring
 #
-
+ 
 define pwstring
 	if $argc == 0
 		help pwstring
@@ -679,18 +685,18 @@ define pwstring
 		printf "WString ref-count \t= %d\n", $arg0._M_rep()._M_refcount
 	end
 end
-
+ 
 document pwstring
 	Prints std::wstring information.
 	Syntax: pwstring <wstring>
 	Example:
 	pwstring s - Prints content, size/length, capacity and ref-count of wstring s
 end 
+ 
 
-#
 # C++ related beautifiers (optional)
-#
 
+ 
 set print pretty on
 set print object on
 set print static-members on

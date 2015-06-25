@@ -76,7 +76,3 @@ addpath PATH ./
 
 export VLR_ROOT=~
 
-# Default AWS access token (build_machine IAM user)
-export AWS_ACCESS_KEY_ID=AKIAIF5PONFOIROTWTFA
-export AWS_SECRET_ACCESS_KEY=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
-

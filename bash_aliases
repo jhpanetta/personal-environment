@@ -5,11 +5,29 @@
 #
 #
 
-alias purge="rm -f *~"
+alias purge="/bin/rm *~"
 alias ls='ls -F'
-
 alias wopr='ssh -YA wopr'
 
+# Show all environment variables (with their values) which
+# contain the argument string.  (pth PATH)
+evl()
+{
+  printenv | grep ${1} | sort
+}
+
+# Echo a PATH type variable and split by colons for a nicer display
+pth()
+{
+  echo ${1} | tr ':' '\n'
+}
+
+# Go up some levels in the dir structure
+u()     { cd ..; }
+uu()    { cd ../..; }
+uuu()   { cd ../../..; }
+uuuu()  { cd ../../../..; }
+uuuuu() { cd ../../../../..; }
 
 ################ PATH Manipulation ###################################
 
@@ -47,9 +65,27 @@ delpath()
 
 
 ####################### DEV environments ###################
+goDevel()
+{
+    source ~/.environment/zoox_devel
+    cd ${WORKSPACE}
+}
 
-alias goDevel='source ~/.environment/zoox_devel;cd $WORKSPACE'
-alias goClams='source ~/.environment/zoox_clams;cd $WORKSPACE'
+goClams()
+{
+    source ~/.environment/zoox_clams
+    cd ${WORKSPACE}
+}
 
-#alias goTest='source ~/.environment/zoox_test;cd ~/test_catkin_ws/'
+goInfra()
+{
+    source ~/.environment/zoox_infra $*
+    cd ${INFRA_ROOT}
+}
+
+goBazel()
+{
+    source ~/.environment/zoox_driving_bazel
+    cd ${WORKSPACE}
+}
 

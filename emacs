@@ -1,24 +1,23 @@
 ;;
 
+;; Personal emacs files
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
 ;; Use Unix line end
 (setq default-buffer-file-coding-system 'iso-latin-1-unix)
 (prefer-coding-system 'iso-latin-1-unix)
 (normal-erase-is-backspace-mode)
 (set-default 'truncate-lines t)
 
-;; make passwords invisible?
+;; make passwords invisible
 (add-hook 'comint-output-filter-functions
           'comint-watch-for-password-prompt)
 
 ;; Use y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; desktop saving?
-;;(desktop-save-mode)
-
 ;; Font lock mode: lazy lock (fontifies only when necessary)
 (global-font-lock-mode t)
-;;(setq font-lock-support-mode 'lazy-lock-mode)
 (setq font-lock-maximum-decoration t)
 
 ;; Let % show the matching parenthesis
@@ -30,12 +29,30 @@
         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
 
-;; Fix indentation in C
-(setq c-default-style "linux" c-basic-offset 2)
+;; C/C++ preferences
+(require 'google-c-style)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
-;; Load ROS emacs extenstions
-;(add-to-list 'load-path "/opt/ros/indigo/share/emacs/site-lisp")
-;(require 'rosemacs-config)
+;; Formatting Code
+(load "/usr/share/emacs/site-lisp/clang-format-3.6/clang-format.el")
+(defun clang-format-mode-hook ()
+  (defun clang-format-buffer ()
+    (interactive)
+    (save-excursion
+      (call-interactively 'mark-whole-buffer)
+      (call-interactively 'clang-format-region)))
+  (local-set-key (kbd "<f12>") 'clang-format-buffer))
+(add-hook 'c-mode-common-hook 'clang-format-mode-hook)
+(add-hook 'before-save-hook
+         'delete-trailing-whitespace)
+
+;; Turn off line truncation in *compilation* buffer
+(defun my-compilation-mode-hook ()
+  (setq truncate-lines nil) ;; automatically becomes buffer-local
+  (set (make-local-variable 'truncate-partial-width-windows) nil))
+(add-hook 'compilation-mode-hook 'my-compilation-mode-hook)
+
 (require 'yaml-mode)
 
 ;; Python Preferences
@@ -60,18 +77,22 @@
 ;; Add tab fix hook to various modes
 (defun my-tab-fix ()
   (local-set-key [tab] 'indent-or-expand))
-(add-hook 'c-mode-hook          'my-tab-fix)
+
 (add-hook 'c++-mode-hook        'my-tab-fix)
-(add-hook 'sh-mode-hook         'my-tab-fix)
-(add-hook 'emacs-lisp-mode-hook 'my-tab-fix)
-(add-hook 'python-mode-hook     'my-tab-fix)
-(add-hook 'java-mode-hook       'my-tab-fix)
-(add-hook 'nxml-mode-hook       'my-tab-fix)
-(add-hook 'text-mode-hook       'my-tab-fix)
-;;(add-hook 'latex-mode-hook      'my-tab-fix)
-(add-hook 'makefile-mode-hook      'my-tab-fix)
+(add-hook 'c-mode-hook          'my-tab-fix)
 (add-hook 'cmake-mode-hook      'my-tab-fix)
-(add-hook 'yaml-mode-hook      'my-tab-fix)
+(add-hook 'conf-mode-hook       'my-tab-fix)
+(add-hook 'emacs-lisp-mode-hook 'my-tab-fix)
+(add-hook 'html-mode-hook       'my-tab-fix)
+(add-hook 'java-mode-hook       'my-tab-fix)
+(add-hook 'makefile-mode-hook   'my-tab-fix)
+(add-hook 'nxml-mode-hook       'my-tab-fix)
+(add-hook 'python-mode-hook     'my-tab-fix)
+(add-hook 'sh-mode-hook         'my-tab-fix)
+(add-hook 'text-mode-hook       'my-tab-fix)
+(add-hook 'yaml-mode-hook       'my-tab-fix)
+(add-hook 'markdown-mode-hook   'my-tab-fix)
+
 
 ;; Remove unneeded functions from hippie-expand
 (setq hippie-expand-try-functions-list
@@ -101,6 +122,7 @@
 (setq auto-mode-alist
       (mapcar 'purecopy
                '(
+                 ("BUILD"                . python-mode) ;; Bazel build file.  python is close.
                  ("CMakeLists.txt\\'"    . makefile-mode)
                  ("\\.bash\\'"           . sh-mode)
                  ("\\.bashrc\\'"         . sh-mode)
@@ -112,13 +134,18 @@
                  ("\\.h\\'"              . c-mode)
                  ("\\.hh\\'"             . c++-mode)
                  ("\\.hpp\\'"            . c++-mode)
+                 ("\\.ini\\'"            . conf-mode)
                  ("\\.launch\\'"         . nxml-mode)
+                 ("\\.md"                . markdown-mode)
                  ("\\.py\\'"             . python-mode)
                  ("\\.sh\\'"             . sh-mode)
                  ("\\.txt\\'"            . text-mode)
                  ("\\.xml\\'"            . nxml-mode)
                  ("\\.yml\\'"            . yaml-mode)
                  ("\\.yaml\\'"           . yaml-mode)
+                 ("\\.htm\\'"            . html-mode)
+                 ("\\.html\\'"           . html-mode)
+                 ("\\.mako\\'"           . html-mode) ;; mako template file
                )))
 
 (custom-set-variables
@@ -126,6 +153,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(buffers-menu-max-size 30)
  '(cua-mode t nil (cua-base))
  '(inhibit-startup-screen t)
  '(show-paren-mode t)

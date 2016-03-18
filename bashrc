@@ -73,6 +73,12 @@ export NO_AT_BRIDGE=1
 addpath PATH ~/bin
 addpath PATH ./
 
+# Hook for python initialization
+export PYTHONSTARTUP=${HOME}/env/python/initialize.py
+
 
 export VLR_ROOT=~
 
+export ROUTER_HOME=/opt/RTI/RTI_Routing_Service_5.1.1
+export NDDSHOME=/opt/RTI/ndds.5.1.1
+export RTI_LICENSE_FILE=/opt/RTI/rti_license.dat

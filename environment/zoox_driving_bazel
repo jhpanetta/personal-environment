@@ -1,0 +1,5 @@
+#!/bin/bash
+export WORKSPACE=~/ws/driving-bazel
+export PATH=/home/panetta/bazel/output:$PATH
+
+

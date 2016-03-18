@@ -1,0 +1,3 @@
+#!/bin/bash
+export WORKSPACE=~/workspaces/clams2
+source $WORKSPACE/devel/setup.bash

@@ -1,0 +1,17 @@
+#!/bin/bash
+WORKSPACE=~/ws/infra
+
+if [ $# -eq 1 ] ; then
+case $1 in 
+    *catalog*)
+            [ -e ~/virtualenv/data_catalog/bin/activate ] && \
+                . ~/virtualenv/data_catalog/bin/activate
+
+            ;;
+
+    
+esac
+fi
+
+
+source $WORKSPACE/setup.bash
